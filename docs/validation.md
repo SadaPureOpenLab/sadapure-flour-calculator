@@ -24,8 +24,12 @@ Local browser checks confirmed exactly two builder fields (quantity and goal), i
 
 ## Privacy and limits
 
-No backend, trackers, automatic email or customer/health profile store. Order requests omit condition names and are sent only by the visitor in their own mail app. Browser extensions and mail-client handling remain outside this application's control. Search indexing, an independent accessibility audit, complete unavailable book review, exact food IDs, clinical effects and individual suitability are unverified.
+No trackers or customer/health profile store. The optional server-side Resend integration is implemented but inactive until connected. Order files contain visitor-reviewed contact details and ingredients, omitting condition names. Direct sending requires explicit review/consent and provider acceptance; mail-app fallbacks require visitor sending. Browser extensions and mail-client handling remain outside this application's control. Search indexing, an independent accessibility audit, complete unavailable book review, exact food IDs, clinical effects and individual suitability are unverified.
 
 ## Google search setup
 
 The calculator URL-prefix property was verified using its published HTML meta tag. The sitemap was submitted and resubmitted after an initial fetch error. A Google live test of sitemap.xml confirmed crawl allowed, page fetch Successful and indexing allowed. The sitemap report still showed Couldn't fetch when last checked. Google accepted the homepage indexing request into its priority crawl queue. Actual indexing/ranking remain unconfirmed.
+
+### Custom-order and application update
+
+37 automated checks pass including server validation, fixed Gmail/CC recipients, reply-to, actual PDF/XLSX attachment contents, no health-goal leak, mock provider success/error, unconfigured endpoint status and origin restrictions. Automatic real delivery remains unverified and inactive because the user has not connected Resend credentials and a hosted endpoint. Excel generation is lazy-loaded, outside the initial app bundle. Dependency audit reports zero known vulnerabilities after a compatible uuid override.

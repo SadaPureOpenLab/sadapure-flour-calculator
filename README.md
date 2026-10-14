@@ -12,7 +12,7 @@ Choose a goal and batch quantity; percentages and gram weights update immediatel
 - Complete ingredient table, composition chart, local CSV/PDF, print and share links.
 - Household flour planner and searchable ingredient references.
 - Direct button to the SadaPure multigrain flour product page.
-- Custom-order email draft addressed to the public business email, with quantity and ingredients only. A visitor reviews and sends it in their own email app; this site never sends automatically.
+- Custom-order checkout with name, email, phone and delivery address; reviewed PDF and Excel files with complete bilingual ingredients. Requests target sadapure.com@gmail.com with contact@sadapure.com copied. Gmail draft and device file-sharing fallbacks are available. Direct sending remains inactive until the user connects the server-side Resend service; see docs/custom-orders.md.
 
 ## Run and verify
 
@@ -46,3 +46,7 @@ The build includes a descriptive title, meta description, canonical URL, social 
 See [validation](docs/validation.md), [reviewed books and articles](docs/research-bibliography.md), [design changes](docs/design-fidelity.md), [contribution guide](CONTRIBUTING.md), [security guidance](SECURITY.md) and [asset policy](ASSET-LICENSE.md). Code is MIT licensed; SadaPure branding is reserved.
 
 Older editor, costing and focus helpers remain in source history/library tests but are not part of the current main interface.
+
+## Application redesign and custom orders
+
+Fixed dark application layout with tactile depth, responsive controls and a separate contact/review flow. Chart, table, PDF, Excel and order files use English (Roman Urdu) ingredient names. Customer details remain in memory, never shared calculator URLs or browser storage. 37 tests cover arithmetic, sources, attachments, consent, validation, configured/mock provider acceptance and failure states. No real customer email was sent during automated validation.

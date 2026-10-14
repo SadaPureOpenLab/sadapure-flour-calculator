@@ -1,0 +1,11 @@
+import { useState } from 'react';
+import { CATALOGUE, DATA } from '../lib/engine';
+export function Explorer({ urdu }: { urdu: boolean }) {
+  const [query,setQuery] = useState(''), [group,setGroup] = useState('All');
+  const filtered = CATALOGUE.filter(i => `${i.name} ${i.roman} ${i.urdu}`.toLowerCase().includes(query.toLowerCase()) && (group === 'All' || i.group === group));
+  return <section className="companion"><h1>{urdu ? 'اپنے اجزاء کو سمجھیں' : 'Meet the ingredients.'}</h1><p className="lead">{urdu ? 'انگریزی، اردو یا عام نام سے 50 اجزاء تلاش کریں۔' : '50 ingredients, searchable by English, Urdu or familiar kitchen names. Only 18 belong to the published recipe; the rest are custom exploration entries.'}</p>
+    <div className="explorer-controls"><label>{urdu ? 'اجزاء تلاش کریں' : 'Search ingredients'}<input type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Wheat, jai, تل…"/></label><label>{urdu ? 'قسم' : 'Ingredient group'}<select value={group} onChange={e => setGroup(e.target.value)}>{['All',...new Set(CATALOGUE.map(i=>i.group))].map(g=><option key={g}>{g}</option>)}</select></label></div>
+    <p role="status">{filtered.length} ingredients</p><div className="ingredient-library">{filtered.map(i=><article key={i.id}><div><h2>{urdu ? i.urdu : i.name}</h2><p className="ingredient-name">{i.roman} · <span lang="ur" dir="rtl">{i.urdu}</span></p></div><span className="group-label">{i.group} · {i.basisPoints ? `${i.basisPoints / 100}% in published recipe` : 'Custom library only'}</span><p>{i.note}</p><p className="small">{i.allergens.length ? `Highlighted concerns: ${i.allergens.join(', ')}.` : 'No highlighted allergen category in this snapshot. This is not an allergy-free guarantee.'} Any ingredient can matter for a specific allergy; shared equipment controls are unknown.</p></article>)}</div>
+    {filtered.length === 0 ? <p>No matches. Try a common name or choose All groups.</p> : null}<p className="source">Source: <a href={DATA.sourceUrl}>SadaPure published ingredient table</a> · No ingredient nutrient values have been clinically or analytically validated here.</p>
+  </section>;
+}

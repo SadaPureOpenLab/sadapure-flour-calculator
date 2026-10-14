@@ -48,7 +48,7 @@ test('group chart totals use the same rows and remain exactly 100%',()=>{
 });
 test('CSV and copied summary include all displayed quantities and provenance',()=>{
   const sheet=makeSheet('2.5',ORIGINAL,false), exported=csv(sheet), copied=summary(sheet);
-  for(const row of sheet.rows){ assert.ok(exported.includes(`"${row.name}"`)); assert.ok(exported.includes(`"${row.grams.toFixed(2)}"`)); assert.ok(copied.includes(`${row.name}: ${row.share}% = ${row.grams.toFixed(2)} g`)); }
+  for(const row of sheet.rows){ assert.ok(exported.includes(`"${row.name} (${row.roman})"`)); assert.ok(exported.includes(`"${row.grams.toFixed(2)}"`)); assert.ok(copied.includes(`${row.name} (${row.roman}): ${row.share}% = ${row.grams.toFixed(2)} g`)); }
   assert.ok(exported.includes('"TOTAL","","100","2500.00"')); assert.ok(exported.includes(DATA.sourceUrl));
 });
 test('public and custom classifications remain distinct even with identical percentages',()=>{

@@ -16,3 +16,7 @@ User-directed changes: authentic square emblem only; international Flour (Atta) 
 Urdu uses Noto Naskh Arabic for legibility. Quantity units and presets retain left-to-right numerical layout. Mobile checks found and corrected a unit/input overlap. PDFs with both 18 and 50 entries were downloaded and visually reviewed; the 50-entry export spans two pages.
 
 Remaining limits: no independent accessibility audit, translation review, clinical review or cooking-performance validation is claimed. Visual screenshots are evidence of the rendered prototype, not product certification.
+
+## Current interface revision
+
+The current interface is goal-only and live: quantity and goal changes update the output without a Generate action. The culinary-focus, extra personal fields and theme toggle were removed at the user's request. The main screen uses a fixed dark palette. Product and custom-order buttons connect visitors with SadaPure; email is a visitor-reviewed draft, not an automatic submission.

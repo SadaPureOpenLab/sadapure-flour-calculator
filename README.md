@@ -1,78 +1,48 @@
-<p align="center"><img src="public/assets/sadapure-icon.png" width="80" height="80" alt="SadaPure emblem"/></p>
+# SadaPure Multigrain Flour (Atta) Calculator
 
-# SadaPure Smart Flour (Atta) Builder
+**[Open the live calculator](https://sadapureopenlab.github.io/sadapure-flour-calculator/)** · [Goal research](docs/goal-research.md) · [Ingredient references](docs/ingredient-research.md)
 
-An open, browser-based workspace for exact flour-blend arithmetic: inspect SadaPure's published 18-ingredient recipe, scale it to a quantity, explore a 54-ingredient custom library and plan household flour use.
+Choose a goal and batch quantity; percentages and gram weights update immediately. The current interface uses a fixed dark theme, with English and Urdu labels. It has no Generate button, culinary-focus selector, personal-health form or manual ingredient editor.
 
-**[Open the live educational demo](https://sadapureopenlab.github.io/sadapure-flour-calculator/)** · [Research register](docs/goal-research.md)
+## Current features
 
-**Status:** public educational prototype; 30 automated checks and the initial GitHub build/deployment passed. Functional browser validation is recorded below. No clinical, manufacturing or independent accessibility validation is claimed.
+- 22 goal profiles, 54 ingredient identities and exact batch arithmetic.
+- Everyday calculations preserve SadaPure's published 18-ingredient table.
+- Other goals show source-recipe snapshots or explicitly marked ingredient examples.
+- Complete ingredient table, composition chart, local CSV/PDF, print and share links.
+- Household flour planner and searchable ingredient references.
+- Direct button to the SadaPure multigrain flour product page.
+- Custom-order email draft addressed to the public business email, with quantity and ingredients only. A visitor reviews and sends it in their own email app; this site never sends automatically.
 
-## What it does
-
-- Shows every published ingredient, percentage, gram weight and Urdu name.
-- Uses integer percentage units and preserves the total after display rounding.
-- Includes quantity presets, custom percentage editing, explicit normalization and reset.
-- Offers 54 supported ingredient identities and 22 goals/concerns with linked guidance.
-- Uses the selected goal and culinary focus to generate food examples, preserves source provenance and applies explicit exclusions.
-- Provides a household flour (atta) planner, ingredient search and user-price costing.
-- Exports CSV and English PDF; prints Urdu names; copies summaries and privacy-safe result links.
-- Runs locally in the browser without registration, analytics, backend storage or medical API calls.
-
-## Run locally
-
-Requires Node.js 22.12+ and npm.
+## Run and verify
 
 ```sh
 npm ci
 npm run dev
+npm test
+npm run build
 ```
 
-Open `http://127.0.0.1:5184`. Run `npm test` for calculation/data tests and `npm run build` for type checking and the static production build. `npm run preview` serves the built output locally.
+The static build is published by GitHub Actions. Permissions for checks are read-only; the demo workflow has the Pages permissions needed to publish this educational project. Commerce and order confirmation are handled by SadaPure.
 
-## Calculation and rounding
+## Recipe and research scope
 
-Each ingredient starts from `total flour grams × percentage / 100`. Shares are integer basis points: 48% is 4,800 out of 10,000. Quantity supports 0.001–1,000 kg, with at most three decimal places. Display weights use centigrams (0.01 g). The largest-remainder method distributes residual centigrams by descending remainder, breaking ties by catalogue order. Consequently the table and export total exactly equal the entered flour mass.
+Book records, available previews, food references and published articles inform ingredient roles. Exact experimental proportions have not been established as clinical doses. Complete unavailable books, supplier nutrient mappings, cooking performance and individual dietary suitability have not been validated.
 
-Custom percentages permit two decimal places and must sum to 100% before output. Removal does not silently change the remaining percentages. Explicit normalization preserves relative ratios and reports the changed values.
+The PCOS source table lists 97% under a 5 kg heading. Its example explicitly rescales existing rows to 100% and does not invent the missing ingredient. Hair and skin share a published source recipe, rather than an invented difference. Gender or body weight alone does not establish a flour formula.
 
-## Source and classification
+The original blend contains wheat, barley, rye and sesame. Ingredient omission cannot certify allergy safety or shared-equipment controls. Versions, sources and adjustments are preserved in local exports. Shared URLs include only batch size and proportions, not a health-goal name.
 
-The published formula is a dated snapshot of the [SadaPure product ingredient table](https://sadapure.com/product/multi-grain-atta-flour), retrieved 14 October 2026. Narrative discrepancies and ambiguous moong/lentil identity remain documented. It does not certify the manufactured formula of a particular pack or batch.
+## Order requests and privacy
 
-The 36 additional library entries are educational identities, not ingredients of the official recipe. Their exact food-composition IDs, nutrient values, processing state, local-name accuracy and cooking performance need review. No nutrition totals or low-GI/high-protein/gluten-free product certifications are invented.
+The application has no backend, analytics, customer database or automatic email service. The order button opens a mailto draft. For long ingredient lists, the draft asks the visitor to attach the CSV; the link is bounded to avoid mail-client truncation. No diagnosis, source recipe's medical marketing name or private health narrative is inserted into the order email.
 
-**Official Published SadaPure Formula** and **Custom Educational Mix** remain distinct even if their proportions happen to match. No recipe is labelled professionally reviewed.
+Published recipes and exploration examples are separate from human approval. The SadaPure team can discuss ingredients, availability and price; this app does not claim that a dietitian or manufacturer has approved every example.
 
-## Health, allergens and private inputs
+## Technical SEO
 
-The original blend contains wheat, barley, rye and sesame and is not gluten-free. A wheat-only exclusion leaves other gluten cereals. An exclusion rule cannot establish certified ingredients, shared-equipment controls or allergy safety.
+The build includes a descriptive title, meta description, canonical URL, social metadata, WebApplication structured data, readable initial HTML and a project sitemap. See [SEO and contact verification](docs/seo-and-contact.md). Indexing or ranking has not been confirmed or guaranteed.
 
-The 22 goals include diabetes, PCOS/PMOS, hair fall, stamina, weight management and allergy concerns. These selections choose distinct food-exploration profiles, not therapeutic percentages. Four source recipe tables are versioned; an incomplete 97% source is explicitly rescaled and marked custom. Other ratios and the 50:50 goal/focus rule are disclosed experimental development choices, not percentages proven by the linked studies. Age, weight, gender and a private question never prescribe a medical mix and are omitted from exports/shared links. They are not persisted or transmitted.
+See [validation](docs/validation.md), [reviewed books and articles](docs/research-bibliography.md), [design changes](docs/design-fidelity.md), [contribution guide](CONTRIBUTING.md), [security guidance](SECURITY.md) and [asset policy](ASSET-LICENSE.md). Code is MIT licensed; SadaPure branding is reserved.
 
-The app has no clinically validated nutrient engine, therapeutic formulation engine, production batch database or shelf-life prediction.
-
-## Source layout
-
-| Area | Responsibility |
-|---|---|
-| `src/data` | Immutable published snapshot, custom identity catalogue and guidance links |
-| `src/lib` | Percentage arithmetic, explicit mix generation and exports |
-| `src/components` | Results, custom editor, planner, explorer and education |
-| `tests` | Data integrity, exact totals, boundary cases, exports and generator restrictions |
-| `public/assets` | Authentic emblem and an explicitly illustrative grain still life |
-
-## Deployment
-
-The `dist` directory is a static application. Prefer a staging environment on an authorized platform with terms permitting business use. The app has no checkout or storefront; commerce remains on [sadapure.com](https://sadapure.com).
-
-Do not report a public demo URL until it has been deployed and verified. Before public hosting, set deployment-specific canonical and Open Graph URLs, test HTTPS clipboard/download behavior and configure appropriate response headers. The local preview is not an internet deployment.
-
-## Contribution and licensing
-
-See [CONTRIBUTING](CONTRIBUTING.md), [SECURITY](SECURITY.md), [asset policy](ASSET-LICENSE.md) and [LICENSE](LICENSE). Code is MIT licensed. SadaPure trademarks, emblem, packaging and product images are excluded. Third-party dependencies retain their own licenses; no reviewed comparison-project code was copied.
-
-## Research and validation
-
-See [all 22 goal profiles](docs/goal-research.md), [54 ingredient references and review scope](docs/ingredient-research.md), [books and articles reviewed](docs/research-bibliography.md), [completed checks](docs/validation.md) and [design comparison](docs/design-fidelity.md). Complete unavailable books, supplier nutrient mappings, clinical formulations and cooking performance have not been validated.
-
+Older editor, costing and focus helpers remain in source history/library tests but are not part of the current main interface.

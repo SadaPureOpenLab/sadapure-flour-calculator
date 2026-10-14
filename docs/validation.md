@@ -1,33 +1,27 @@
-# Validation record — 14 October 2026
+# Validation — current goal-only interface
 
-The source implementation is an educational prototype. The initial public educational deployment is verified at https://sadapureopenlab.github.io/sadapure-flour-calculator/ . This record does not claim clinical, food-manufacturing or nutritional validation.
+Updated 14 October 2026. The source is a public educational food calculator, not a clinically validated formulation system.
 
-## Automated checks
+## Automated verification
 
-30 arithmetic, generator and serialization tests pass. Coverage includes all 18 published proportions, batch scaling, exact centigram totals, invalid quantities and percentages, explicit normalization, exclusions, 50-ingredient shared links, corrupted-link recovery, household planning and ingredient costing. Production build passes.
+32 checks pass locally. They cover published data, exact centigram totals, quantity/percentage boundaries, normalization, allergen rules, legacy/v3 shared links, all 22 live goal profiles and order-draft privacy/length. Production build passes.
 
-## Browser checks
+The main UI now derives results from goal and quantity directly. There is no focus selector, Generate button, personal form or appearance toggle. Theme starts dark in the initial HTML.
 
-Verified 5 kg scaling; removing wheat invalidates the total until explicit normalization; gluten flags remain for barley/rye; original reset; local CSV, copied summary and PDF downloads; 50-entry custom table and its two-page PDF; mobile width 390 px with no horizontal page overflow; Urdu right-to-left attributes and quantity-unit separation; household example 4 people × 2 rotis × 40 g × 30 days = 9.6 kg.
+## Recipe/source checks
 
-## Evidence boundaries
+Everyday matches the original 18-entry table. The other unmodified profiles produce 21 distinct baselines across 22 goals; hair and skin intentionally share a source recipe. An incomplete 97% table is visibly marked and rescaled, not represented as an exact published 100% formula. No medical, cooking, nutrient or manufacturing review is claimed.
 
-The published 18-ingredient table is a dated brand snapshot, not a laboratory certificate. 36 additional ingredient identities have no reviewed food-composition mapping. Four generated culinary templates are illustrative and untested for cooking performance. Selecting diabetes, PCOS or another concern shows educational guidance and never establishes a therapeutic formula. Cross-contact controls cannot be certified by excluding names.
+## Prior browser/public verification
 
-PDF is currently English only. Urdu uses the browser print path. Accessibility has received focused keyboard/semantic work, but no independent audit is claimed. No clinical validation, nutrient analysis or manufacturing review has been performed.
+The previous version was publicly deployed and checked on HTTPS. Goal changes altered the actual table; live CSV matched the displayed percentages and 2,500 g total. PDFs with 18 and 50 entries were downloaded and visually reviewed, as was a PDF with the source discrepancy and ratio rationale. Source files and assets matched the public checkout after text line-ending normalization.
 
-## Privacy
+Earlier mobile checks at 390 × 844 verified no horizontal page overflow, Urdu direction/quantity-unit separation and result scrolling. The household example 4 people × 2 rotis × 40 g × 30 days gives 9.6 kg. Ingredient search and reduced/print styles were checked. Clipboard tool reads sometimes returned an older local link despite copy feedback, so a visible result-link fallback was added; actual href and restoration must be checked after the current deployment.
 
-The app has no backend, account, analytics or AI calls. Free-text context stays in component memory and is excluded from exports and shared recipe URLs. Browser extensions remain outside the app's control. A shared URL includes only batch quantity and blend percentages.
+## Current UI checks
 
-## Goal-generation regression checks
+Local browser checks confirmed exactly two builder fields (quantity and goal), initial dark appearance, immediate besan changes from 20% / 500 g (protein, 2.5 kg) to 7% / 175 g (fibre), then 350 g at 5 kg. Empty quantity hides the table and restoring a valid quantity restores it. Product and email destinations match the official footer, and the expanded order preview contains ingredient weights without the concern label. Email-button hover has dark text rgb(16,39,29) on light green rgb(196,226,151). Latest CI/deployment status and public metadata must be checked on the current revision, not inferred from an older run.
 
-All 22 goals × 5 focus choices (110 combinations) produce valid 100% totals; each goal respects exclusions. Browser checks verified that selection hides the previous table, then Generate changes actual percentages: published diabetes wheat 60%; source-adjusted PCOS wheat 30.93%; the same profile with millet focus wheat 15.46%; plant-protein example wheat 45% and besan 20%. These are functional checks, not clinical evidence. Hair and skin share a source recipe; there are 21 distinct unmodified examples rather than an invented difference between them.
+## Privacy and limits
 
-The new goal/focus PDF was downloaded and visually reviewed: correct source URL, 97% discrepancy and experimental focus rationale were included without clipping. Private QA text and concern names were absent from the shared URL. Legacy v2 50-entry links remain compatible; v3 preserves all 54 identities. Ingredient search, light/dark appearance and zero captured console errors were checked locally.
-
-## Published-source and deployment checks
-
-All 55 tracked project files were compared with the public checkout; source and asset contents matched after normalizing text line endings. Initial CI and educational demo deployment succeeded on GitHub. Live HTTPS browser checks confirmed goal changes affect the displayed result: besan 20% / 500 g for the plant-protein example and 7% / 175 g for the fibre example at 2.5 kg. This verifies behaviour, not dietary benefit.
-
-Older Dependabot workflow checks ran before workflow files existed; the complete manifest now exists. The initial successful deployment reported deprecated action runtime notices; action versions were updated from their official release records and runner images pinned for stability. Later CI status must be checked on the current revision.
+No backend, trackers, automatic email or customer/health profile store. Order requests omit condition names and are sent only by the visitor in their own mail app. Browser extensions and mail-client handling remain outside this application's control. Search indexing, an independent accessibility audit, complete unavailable book review, exact food IDs, clinical effects and individual suitability are unverified.

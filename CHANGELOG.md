@@ -16,3 +16,11 @@
 - Documented and exposed the 97% incomplete brand table instead of inventing missing ingredients.
 - Preserved correct source/rationale in local exports and added v3 links with legacy v2 compatibility.
 - Added six regression checks, including all 110 goal/focus combinations.
+
+## Live goal-only interface and contact
+
+- Removed Generate, culinary focus, personal inputs and manual editing from the current main interface.
+- Fixed dark appearance and explicit high-contrast primary hover states.
+- Preserved the original published 18-entry blend for everyday use.
+- Added truthful SEO metadata, initial readable HTML and sitemap.
+- Added product link and privacy-conscious custom-order email draft with length fallback.

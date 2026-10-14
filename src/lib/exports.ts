@@ -1,14 +1,15 @@
+import { ingredientLabel } from '../data/catalogue';
 import { CATALOGUE, DATA, ORIGINAL, allocate, parseQuantity, validateBlend, type Row, type Blend } from './engine';
 import type { RecipeSource } from '../data/goalRecipes';
 export type Sheet = { rows: Row[]; grams: number; classification: string; source?:RecipeSource; rationale?:string };
 const quote = (text: string) => '"' + text.replaceAll('"', '""') + '"';
 export function csv(sheet: Sheet) {
   const fields = [['Classification', sheet.classification], ['Formula version', sheet.source?.version??DATA.version], ['Retrieved', sheet.source?.retrieved??DATA.retrievedDate], ['Source', sheet.source?.url??(sheet.classification.startsWith('Official')?DATA.sourceUrl:'Experimental software proportions; see linked ingredient references')], ['Total flour (g)', String(sheet.grams)], ['Ratio rationale',sheet.rationale??'Published original table or manually entered custom percentages'], [], ['Ingredient', 'Roman Urdu', 'Percentage', 'Weight (g)', 'Category', 'Allergen notes']];
-  for (const row of sheet.rows) fields.push([row.name, row.roman, String(row.share), row.grams.toFixed(2), row.group, row.allergens.join('; ') || 'No guarantee; check ingredient and cross-contact']);
+  for (const row of sheet.rows) fields.push([ingredientLabel(row), row.roman, String(row.share), row.grams.toFixed(2), row.group, row.allergens.join('; ') || 'No guarantee; check ingredient and cross-contact']);
   fields.push(['TOTAL', '', '100', sheet.grams.toFixed(2)]);
   return '\uFEFF' + fields.map(line => line.map(quote).join(',')).join('\r\n');
 }
-export function summary(sheet: Sheet) { return `${sheet.classification}\n${sheet.grams} g flour\n${sheet.rows.map(r => `${r.name}: ${r.share}% = ${r.grams.toFixed(2)} g`).join('\n')}\nNot an allergy-safe or therapeutic recommendation.\nSource: ${sheet.source?.url??DATA.sourceUrl}\nSnapshot: ${sheet.source?.version??DATA.version}\n${sheet.rationale??''}`; }
+export function summary(sheet: Sheet) { return `${sheet.classification}\n${sheet.grams} g flour\n${sheet.rows.map(r => `${ingredientLabel(r)}: ${r.share}% = ${r.grams.toFixed(2)} g`).join('\n')}\nNot an allergy-safe or therapeutic recommendation.\nSource: ${sheet.source?.url??DATA.sourceUrl}\nSnapshot: ${sheet.source?.version??DATA.version}\n${sheet.rationale??''}`; }
 export function downloadCSV(sheet: Sheet) {
   const url = URL.createObjectURL(new Blob([csv(sheet)], { type: 'text/csv;charset=utf-8' }));
   const a = document.createElement('a'); a.href = url; a.download = 'sadapure-blend.csv'; a.click();
@@ -22,10 +23,10 @@ export async function downloadPDF(sheet: Sheet) {
   doc.text(sheet.classification.replaceAll('—','-'), 16, 31); doc.text(`Total flour: ${sheet.grams} g | Snapshot: ${sheet.source?.version??DATA.version}`, 16, 38);
   const header=(y:number)=>{doc.setFont('helvetica','bold');doc.text('Ingredient',16,y);doc.text('%',143,y);doc.text('Weight (g)',163,y);doc.setFont('helvetica','normal');};
   header(49);let y=58;
-  for(const row of sheet.rows){if(y>245){doc.addPage();doc.setFontSize(10);doc.text('SadaPure ingredient breakdown (continued)',16,20);header(31);y=40;}doc.text(row.name,16,y);doc.text(String(row.share),143,y);doc.text(row.grams.toFixed(2),163,y);y+=7;}
+  for(const row of sheet.rows){const lines=doc.splitTextToSize(ingredientLabel(row),120);const height=Math.max(7,lines.length*5+2);if(y+height>245){doc.addPage();doc.setFontSize(10);doc.text('SadaPure ingredient breakdown (continued)',16,20);header(31);y=40;}doc.text(lines,16,y);doc.text(String(row.share),143,y);doc.text(row.grams.toFixed(2),163,y);y+=height;}
   if(y+70>280){doc.addPage();y=25;}
   doc.text(`TOTAL: 100% / ${sheet.grams.toFixed(2)} g`,16,y+5);
-  const notes = ['Ingredient arithmetic only; not a treatment, dietary prescription or medical recipe.', 'Original blend contains wheat, barley, rye and sesame. It is not gluten-free.', 'Custom ingredient safety, cross-contact and cooking suitability are unverified.', 'Weights rounded to 0.01 g using largest-remainder allocation; total is preserved.', `Reference retrieved ${sheet.source?.retrieved??DATA.retrievedDate}:`, sheet.source?.url??DATA.sourceUrl, sheet.rationale??'Custom proportions are not validated medical doses.', 'Additional library entries have no validated nutrient mapping. Reference: fdc.nal.usda.gov', 'PDF uses English. Use Print for Urdu names.'];
+  const notes = ['Ingredient arithmetic only; not a treatment, dietary prescription or medical recipe.', 'Original blend contains wheat, barley, rye and sesame. It is not gluten-free.', 'Custom ingredient safety, cross-contact and cooking suitability are unverified.', 'Weights rounded to 0.01 g using largest-remainder allocation; total is preserved.', `Reference retrieved ${sheet.source?.retrieved??DATA.retrievedDate}:`, sheet.source?.url??DATA.sourceUrl, sheet.rationale??'Custom proportions are not validated medical doses.', 'Additional library entries have no validated nutrient mapping. Reference: fdc.nal.usda.gov', 'PDF uses English and Roman Urdu ingredient names. Use Print for Urdu script.'];
   doc.setFontSize(8);let noteY=y+18;for(const note of notes){for(const line of doc.splitTextToSize(note,178)){if(noteY>276){doc.addPage();noteY=20;}doc.text(line,16,noteY);noteY+=4.5;}noteY+=2;}
   const count=doc.getNumberOfPages();for(let page=1;page<=count;page++){doc.setPage(page);doc.setFontSize(8);doc.text(`${page} / ${count}`,185,288);}
   doc.save('sadapure-blend.pdf');

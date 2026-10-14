@@ -1,6 +1,6 @@
 # Asset and data policy
 
-The SadaPure name, original emblem and wordmark remain reserved brand assets. Software licensing does not permit impersonation, brand affiliation claims or merchandising with these assets. The square icon is the authentic homepage emblem cropped through GitHub's profile-picture interface, not a new logo.
+The SadaPure name, original emblem and wordmark remain reserved brand assets. Software licensing does not permit impersonation, brand affiliation claims or merchandising with these assets. The original square icon preserves the low-resolution homepage emblem. The HD icon is a high-resolution restoration of that emblem, created with an image-editing tool at the owner's request. It preserves the bowl, pestle, leaves, wheat ear, ring and brand palette, but is a reconstructed raster asset rather than an original vector master.
 
 The grain still life is an AI-assisted educational illustration created for this project. It is not product photography, manufacturing evidence or a depiction of every ingredient in precise proportions. Do not repurpose it as proof of product contents.
 

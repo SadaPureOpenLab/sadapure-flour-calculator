@@ -8,3 +8,11 @@
 - Added custom editor, household planner, ingredient explorer and ingredient-only costing.
 - Added English/Urdu interface, reduced-motion and print styles, CSV/PDF and private-result sharing.
 - Added calculation, export and restriction tests. Public hosting status is recorded separately.
+
+## Goal/focus generation correction
+
+- Generate now consumes both selected goal and focus; stale results are hidden after selection changes.
+- Added 54 ingredient identities, 22 explicit goal profiles, source status and experimental-ratio rationale.
+- Documented and exposed the 97% incomplete brand table instead of inventing missing ingredients.
+- Preserved correct source/rationale in local exports and added v3 links with legacy v2 compatibility.
+- Added six regression checks, including all 110 goal/focus combinations.

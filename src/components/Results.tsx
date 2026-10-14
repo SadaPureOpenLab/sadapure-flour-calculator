@@ -17,7 +17,7 @@ export function Results({ sheet, quantity, blend, custom, urdu }: { sheet: Sheet
         <button onClick={() => copy(shareUrl(quantity, blend, custom), 'Result link copied. Only quantity and formula are included.')}><Icon kind="share"/>{urdu ? 'لنک' : 'Share'}</button>
       </div>
     </div>
-    <p className={custom ? 'classification custom' : 'classification'}>{custom ? (urdu ? 'حسب ضرورت تعلیمی آمیزہ — سرکاری مصنوعہ نہیں' : 'Custom Educational Mix — not an official SadaPure product') : (urdu ? 'ساداپیور کے شائع شدہ فارمولے کا حساب' : 'Official Published SadaPure Formula')}</p>
+    <p className={custom ? 'classification custom' : 'classification'}>{custom ? (urdu ? 'حسب ضرورت تعلیمی آمیزہ — سرکاری مصنوعہ نہیں' : sheet.classification) : (urdu ? 'ساداپیور کے شائع شدہ فارمولے کا حساب' : 'Official Published SadaPure Formula')}</p>
     <p className="early-warning">{urdu ? 'اصل آمیزہ گلوٹن فری نہیں۔ الرجی اور مشترکہ مشینوں کے اثرات چیک کریں۔' : 'Original blend is not gluten-free. Check ingredients and cross-contact for allergies.'}</p>
     <p role="status" className="export-status no-print">{status}</p>
     <Composition rows={sheet.rows} grams={sheet.grams} urdu={urdu}/>
@@ -30,7 +30,7 @@ export function Results({ sheet, quantity, blend, custom, urdu }: { sheet: Sheet
     </div>
     <p className="rounding">{urdu ? 'وزن 0.01 گرام تک گول کیا گیا ہے، کل وزن برقرار رہتا ہے۔' : 'Rounded to 0.01 g; the displayed weights add up to your exact total.'}</p>
     <div className="safety"><strong>{custom ? (urdu ? 'الرجی کی حفاظت کی ضمانت نہیں۔' : 'Ingredient and cross-contact safety are not guaranteed.') : (urdu ? 'گندم، جو، رائی اور تل شامل ہیں۔ گلوٹن فری نہیں۔' : 'Contains wheat, barley, rye and sesame. Not gluten-free.')}</strong><span>{urdu ? 'سیلیک مرض یا متعلقہ الرجی کی صورت میں اصل آمیزہ استعمال نہ کریں۔' : 'The original blend is unsuitable for coeliac disease or allergy to a listed ingredient.'}</span></div>
-    <div className="source"><a href={DATA.sourceUrl} target="_blank" rel="noreferrer">{urdu ? 'شائع شدہ اجزاء کا ماخذ' : 'Published ingredient table'}</a><span>Retrieved 14 Oct 2026 · v{DATA.version}</span><button className="no-print" onClick={() => window.print()}><Icon kind="print"/>{urdu ? 'پرنٹ' : 'Print'}</button></div>
+    <div className="source"><a href={sheet.source?.url??DATA.sourceUrl} target="_blank" rel="noreferrer">{urdu ? 'شائع شدہ اجزاء کا ماخذ' : sheet.source?.title??(custom?'Original reference — custom ratios are not this recipe':'Published ingredient table')}</a><span>Retrieved 14 Oct 2026 · v{DATA.version}</span><button className="no-print" onClick={() => window.print()}><Icon kind="print"/>{urdu ? 'پرنٹ' : 'Print'}</button></div>
     <span hidden data-csv-length={csv(sheet).length}/>
   </section>;
 }

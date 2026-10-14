@@ -40,7 +40,8 @@ const extras: [string,string,string,string,string,string[]][] = [
   ['nigella','Nigella Seeds','Kalonji','کلونجی','Spices & leaf',[]],
   ['mung-bean','Mung Bean Flour','Moong','مونگ کا آٹا','Pulses',['pulse']]
 ];
-export const CATALOGUE: Ingredient[] = [...published.ingredients, ...extras.map(([id,name,roman,urdu,group,allergens]) => ({
+const ENGLISH_NAMES: Record<string,string> = {'kala-chana':'Whole Black Chickpea Flour',besan:'Split Chickpea Flour','moong-lentil':'Mung Bean / Lentil Flour'};
+export const CATALOGUE: Ingredient[] = [...published.ingredients.map(ingredient=>({...ingredient,name:ENGLISH_NAMES[ingredient.id]??ingredient.name})), ...extras.map(([id,name,roman,urdu,group,allergens]) => ({
   id,name,roman,urdu,group,allergens,basisPoints:0,
   sourceUrl: 'https://fdc.nal.usda.gov/', identityStatus: 'Educational ingredient name; exact food ID, milling and nutrient mapping pending review',
   note: `${name} is available for custom exploration only; it is not part of the published 18-ingredient recipe. Use food-grade ingredients and cook flour mixtures thoroughly. No nutrient composition, cooking performance or allergen-free status has been validated here.${allergens.length ? ` Highlighted concerns: ${allergens.join(', ')}.` : ''}${id==='lupin' ? ' Lupin can cause allergic reactions; seek product-specific advice, especially with peanut allergy.' : ''}`

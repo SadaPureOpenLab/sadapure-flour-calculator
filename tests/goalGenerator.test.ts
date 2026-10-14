@@ -1,0 +1,14 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { GOALS } from '../src/data/goals';
+import { GOAL_RECIPES } from '../src/data/goalRecipes';
+import { generateForGoal } from '../src/lib/goalGenerator';
+import { FOCUSES } from '../src/lib/generator';
+import { validateBlend, allocate } from '../src/lib/engine';
+import { makeSheet, csv, readShared } from '../src/lib/exports';
+test('every goal and focus produces a valid, exact 100% food example',()=>{for(const goal of GOALS)for(const focus of ['goal-default',...FOCUSES.map(f=>f.id)]){const r=generateForGoal(goal.id,focus,[]);assert.equal(validateBlend(r.blend),10000);assert.equal(allocate(2500,r.blend).reduce((sum,row)=>sum+row.centigrams,0),250000);}});
+test('goal input changes recipe independently of culinary focus',()=>{const profiles=GOALS.map(g=>JSON.stringify(generateForGoal(g.id,'goal-default',[]).blend));assert.equal(new Set(profiles).size,21);assert.notDeepEqual(generateForGoal('diabetes','variety',[]).blend,generateForGoal('pcos','variety',[]).blend);assert.notDeepEqual(generateForGoal('everyday','variety',[]).blend,generateForGoal('everyday','millet',[]).blend);});
+test('source discrepancies are explicit and not invented ingredients',()=>{const p=generateForGoal('pcos','goal-default',[]);assert.equal(p.kind,'source-adjusted');assert.match(p.changes.join(' '),/97%/);assert.equal(Object.values(p.blend).filter(v=>v>0).length,15);for(const [id,recipe] of Object.entries(GOAL_RECIPES))assert.equal(Object.values(recipe.percentages).reduce((a,b)=>a+b,0),recipe.sourceTotal,id);});
+test('each goal respects every explicit exclusion',()=>{for(const g of GOALS){const r=generateForGoal(g.id,'seed',['gluten','soy','sesame','nuts']);for(const id of ['wheat','barley','rye','oat-flour','oat-bran','soy','sesame','walnut','almond','peanut','lupin'])assert.equal(r.blend[id],0);assert.equal(validateBlend(r.blend),10000);}});
+test('goal source and ratio rationale survive local CSV export',()=>{const r=generateForGoal('diabetes','goal-default',[]),s=makeSheet('2.5',r.blend,true);s.source=r.source;s.rationale=r.changes.join(' ');assert.match(csv(s),/diabetes-multigrain-flour/);assert.doesNotMatch(csv(s),/multi-grain-atta-flour/);});
+test('54-entry v3 links preserve newly added ingredient identities',()=>{const r=generateForGoal('stamina','goal-default',[]);const q='?kg=2.5&v=3&mix='+Object.values(r.blend).join(',');assert.deepEqual(readShared(q).blend,r.blend);assert.throws(()=>generateForGoal('unreviewed-goal','goal-default',[]));});

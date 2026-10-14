@@ -4,8 +4,8 @@ import { CATALOGUE, ORIGINAL, allocate, conflicts, validateBlend } from '../src/
 import { generateMix, FOCUSES } from '../src/lib/generator';
 import { GOALS } from '../src/data/goals';
 import { makeSheet, readShared } from '../src/lib/exports';
-test('50 supported identities and 22 goals, with immutable original formula',()=>{
-  assert.equal(CATALOGUE.length,50);assert.equal(new Set(CATALOGUE.map(i=>i.id)).size,50);assert.equal(GOALS.length,22);
+test('54 supported identities and 22 goals, with immutable original formula',()=>{
+  assert.equal(CATALOGUE.length,54);assert.equal(new Set(CATALOGUE.map(i=>i.id)).size,54);assert.equal(GOALS.length,22);
   assert.equal(Object.values(ORIGINAL).filter(n=>n>0).length,18);assert.equal(ORIGINAL.quinoa,0);assert.equal(ORIGINAL.soy,0);
 });
 test('every culinary focus generates 100%, correctly scaled, explicitly custom',()=>{
@@ -19,6 +19,6 @@ test('multiple exclusions remain mathematically valid',()=>{
   const {blend}=generateMix('seed',['gluten','sesame','nuts','soy']);for(const key of ['wheat','sesame','soy','almond','peanut','lupin'])assert.equal(blend[key],0);assert.equal(validateBlend(blend),10000);assert.throws(()=>generateMix('unsupported',[]));
 });
 test('all 50 equal shares produce exact output and safe shared round trip',()=>{
-  const blend=Object.fromEntries(CATALOGUE.map(i=>[i.id,200]));assert.equal(validateBlend(blend),10000);assert.equal(allocate(2500,blend).length,50);
-  const search='?kg=2.5&v=2&mix='+CATALOGUE.map(i=>blend[i.id]).join(',');assert.deepEqual(readShared(search).blend,blend);
+  const blend=Object.fromEntries(CATALOGUE.map((i,index)=>[i.id,index<50?200:0]));assert.equal(validateBlend(blend),10000);assert.equal(allocate(2500,blend).length,50);
+  const search='?kg=2.5&v=2&mix='+CATALOGUE.slice(0,50).map(i=>blend[i.id]).join(',');assert.deepEqual(readShared(search).blend,blend);
 });

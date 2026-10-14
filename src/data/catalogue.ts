@@ -1,5 +1,6 @@
 import published from './formula.json';
 export type Ingredient = { id: string; name: string; roman: string; urdu: string; basisPoints: number; group: string; allergens: string[]; note: string; sourceUrl?: string; identityStatus?: string };
+export const ingredientLabel = (ingredient: Pick<Ingredient, 'name' | 'roman'>) => `${ingredient.name} (${ingredient.roman})`;
 // Names and culinary categories are educational. Nutrient mappings and cross-contact are unverified.
 const extras: [string,string,string,string,string,string[]][] = [
   ['brown-rice','Brown Rice Flour','Brown chawal','بھورے چاول کا آٹا','Cereals',[]],

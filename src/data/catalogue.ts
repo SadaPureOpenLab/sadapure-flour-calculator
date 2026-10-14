@@ -33,10 +33,15 @@ const extras: [string,string,string,string,string,string[]][] = [
   ['almond','Almond Flour','Badam','بادام کا آٹا','Nuts & coconut',['tree-nut']],
   ['coconut','Coconut Flour','Nariyal','ناریل کا آٹا','Nuts & coconut',['coconut']],
   ['peanut','Peanut Flour','Moongphali','مونگ پھلی کا آٹا','Nuts & coconut',['peanut']],
-  ['walnut','Walnut Meal','Akhrot','اخروٹ کا آٹا','Nuts & coconut',['tree-nut']]
+  ['walnut','Walnut Meal','Akhrot','اخروٹ کا آٹا','Nuts & coconut',['tree-nut']],
+  ['watermelon','Watermelon Seed Meal','Tarbooz magaz','تربوز کے بیجوں کا آٹا','Seeds',[]],
+  ['melon','Melon Seed Meal','Kharbooza magaz','خربوزے کے بیجوں کا آٹا','Seeds',[]],
+  ['nigella','Nigella Seeds','Kalonji','کلونجی','Spices & leaf',[]],
+  ['mung-bean','Mung Bean Flour','Moong','مونگ کا آٹا','Pulses',['pulse']]
 ];
 export const CATALOGUE: Ingredient[] = [...published.ingredients, ...extras.map(([id,name,roman,urdu,group,allergens]) => ({
   id,name,roman,urdu,group,allergens,basisPoints:0,
   sourceUrl: 'https://fdc.nal.usda.gov/', identityStatus: 'Educational ingredient name; exact food ID, milling and nutrient mapping pending review',
   note: `${name} is available for custom exploration only; it is not part of the published 18-ingredient recipe. Use food-grade ingredients and cook flour mixtures thoroughly. No nutrient composition, cooking performance or allergen-free status has been validated here.${allergens.length ? ` Highlighted concerns: ${allergens.join(', ')}.` : ''}${id==='lupin' ? ' Lupin can cause allergic reactions; seek product-specific advice, especially with peanut allergy.' : ''}`
 }))];
+

@@ -4,7 +4,9 @@
 
 An open, browser-based workspace for exact flour-blend arithmetic: inspect SadaPure's published 18-ingredient recipe, scale it to a quantity, explore a 54-ingredient custom library and plan household flour use.
 
-**Status:** initial implementation; local build and calculation tests executed. Public deployment and complete browser QA are tracked in the validation report. This is not a production-readiness or medical-review claim.
+**[Open the live educational demo](https://sadapureopenlab.github.io/sadapure-flour-calculator/)** · [Research register](docs/goal-research.md)
+
+**Status:** public educational prototype; 30 automated checks and the initial GitHub build/deployment passed. Functional browser validation is recorded below. No clinical, manufacturing or independent accessibility validation is claimed.
 
 ## What it does
 

@@ -12,7 +12,7 @@ Updated 14 October 2026 for https://sadapureopenlab.github.io/sadapure-flour-cal
 
 References checked: [Google SEO starter guide](https://developers.google.com/search/docs/fundamentals/seo-starter-guide), [canonical guidance](https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls).
 
-Search Console verification, sitemap submission, indexing and ranking have not been claimed. There is no guarantee that an external detector will classify content a particular way. The interface has no AI branding and does not falsely label its recipe examples as human- or dietitian-approved.
+Search Console ownership is verified and the homepage indexing request was accepted into the priority crawl queue. Sitemap submission was accepted; the report initially showed Couldn't fetch, while a subsequent Google live URL test confirmed the sitemap fetch Successful and crawling allowed. It was resubmitted once. Actual indexing and ranking remain unconfirmed. There is no guarantee that an external detector will classify content a particular way. The interface has no AI branding and does not falsely label its recipe examples as human- or dietitian-approved.
 
 ## Product/contact provenance
 

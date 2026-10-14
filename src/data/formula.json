@@ -1,0 +1,29 @@
+{
+  "id": "sadapure-published-18",
+  "version": "2026-10-14.1",
+  "productName": "SadaPure Multigrain Atta — 18 ingredients",
+  "sourceUrl": "https://sadapure.com/product/multi-grain-atta-flour",
+  "retrievedDate": "2026-10-14",
+  "approvalStatus": "Verified against public ingredient table; not batch-certified or professionally reviewed",
+  "discrepancies": ["Narrative names soy and ragi, absent from the table.", "FAQ refers to wheat plus 18 ingredients; table contains 18 total.", "Moong / lentil identity needs product-specific clarification."],
+  "ingredients": [
+    {"id":"wheat","name":"Whole Wheat Flour","roman":"Gandum","urdu":"سالم گندم کا آٹا","basisPoints":4800,"group":"Cereals","allergens":["wheat","gluten"],"note":"Whole-wheat flour is the largest component of the published blend. Contains gluten."},
+    {"id":"barley","name":"Barley Flour","roman":"Jau","urdu":"جو کا آٹا","basisPoints":1000,"group":"Cereals","allergens":["gluten"],"note":"Barley is a cereal. Its presence means removing wheat alone does not remove gluten."},
+    {"id":"oat-flour","name":"Oat Flour","roman":"Jai ka atta","urdu":"جئی کا آٹا","basisPoints":800,"group":"Cereals","allergens":["oats"],"note":"Milled oats are listed separately from oat bran. Cross-contact controls are not verified."},
+    {"id":"kala-chana","name":"Whole Kala Chana Flour","roman":"Kala chana","urdu":"ثابت کالے چنے کا آٹا","basisPoints":600,"group":"Pulses","allergens":["chickpea"],"note":"Whole black chickpea flour is a pulse ingredient, not a cereal grain."},
+    {"id":"oat-bran","name":"Oat Bran","roman":"Jai ka chhilka","urdu":"جئی کا چھلکا","basisPoints":400,"group":"Bran & husk","allergens":["oats"],"note":"Bran is an oat fraction. The published table treats it as its own ingredient."},
+    {"id":"besan","name":"Chana Dal Besan","roman":"Besan","urdu":"چنے کی دال کا بیسن","basisPoints":400,"group":"Pulses","allergens":["chickpea"],"note":"Chana dal flour is listed separately from whole kala chana flour; do not merge their proportions."},
+    {"id":"moong-lentil","name":"Moong / Lentil Flour","roman":"Moong / daal","urdu":"مونگ / دال کا آٹا","basisPoints":300,"group":"Pulses","allergens":["pulse"],"note":"The source uses an ambiguous moong/lentil label. Ask SadaPure which pulse is used if identity matters."},
+    {"id":"sorghum","name":"Sorghum Flour","roman":"Jowar","urdu":"جوار کا آٹا","basisPoints":300,"group":"Cereals","allergens":[],"note":"Jowar is a cereal ingredient. Its presence does not make the finished blend gluten-free."},
+    {"id":"millet","name":"Millet Flour","roman":"Bajra","urdu":"باجرے کا آٹا","basisPoints":300,"group":"Cereals","allergens":[],"note":"Bajra is a millet flour. The recipe percentage describes quantity, not a health ranking."},
+    {"id":"sesame","name":"Sesame Seeds","roman":"Til","urdu":"تل","basisPoints":300,"group":"Seeds","allergens":["sesame"],"note":"Sesame is explicitly present in the original blend. Avoid the blend if you have sesame allergy."},
+    {"id":"flax","name":"Flaxseed Meal","roman":"Alsi","urdu":"پسی ہوئی السی","basisPoints":250,"group":"Seeds","allergens":[],"note":"Ground flaxseed is a seed ingredient. Follow the pack's storage directions."},
+    {"id":"corn","name":"Whole Corn Flour","roman":"Makki","urdu":"مکئی کا آٹا","basisPoints":150,"group":"Cereals","allergens":[],"note":"The table specifies whole corn flour, not corn starch. These are not interchangeable ingredients."},
+    {"id":"psyllium","name":"Psyllium Husk","roman":"Ispaghol","urdu":"اسپغول کا چھلکا","basisPoints":150,"group":"Bran & husk","allergens":[],"note":"A husk ingredient rather than a grain. This calculator scales the published amount without therapeutic advice."},
+    {"id":"rye","name":"Rye Flour","roman":"Rye (Rai in source)","urdu":"رائی کا آٹا","basisPoints":100,"group":"Cereals","allergens":["gluten"],"note":"Rye contains gluten. The Urdu/common-name wording follows the source and should be confirmed where identity is unclear."},
+    {"id":"chia","name":"Chia Seeds","roman":"Chia beej","urdu":"چیا بیج","basisPoints":50,"group":"Seeds","allergens":[],"note":"Chia is a seed ingredient. A small percentage is still shown individually in every result."},
+    {"id":"cumin","name":"Cumin Seeds","roman":"Zeera","urdu":"زیرہ","basisPoints":40,"group":"Spices & leaf","allergens":[],"note":"Cumin is a spice ingredient. Its weight is calculated from the same source as the main grains."},
+    {"id":"fenugreek","name":"Fenugreek Seeds","roman":"Methi dana","urdu":"میتھی دانہ","basisPoints":30,"group":"Spices & leaf","allergens":[],"note":"Fenugreek is listed as a spice/seed ingredient. Ingredient-specific allergies can occur beyond highlighted categories."},
+    {"id":"moringa","name":"Moringa Leaf Powder","roman":"Sohanjna patta","urdu":"سہانجنا کے پتوں کا پاؤڈر","basisPoints":30,"group":"Spices & leaf","allergens":[],"note":"Moringa leaf is not a grain. Its inclusion does not establish a clinical benefit for the finished flour."}
+  ]
+}

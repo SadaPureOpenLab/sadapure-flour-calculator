@@ -1,3 +1,4 @@
+import { ingredientLabel } from '../data/catalogue';
 import { useState } from 'react';
 import { DATA, fmt, type Blend } from '../lib/engine';
 import { csv, downloadCSV, downloadPDF, summary, shareUrl, type Sheet } from '../lib/exports';
@@ -28,7 +29,7 @@ export function Results({ sheet, quantity, blend, custom, urdu }: { sheet: Sheet
     <div className="table-heading"><h3>{urdu ? 'اجزاء کی مکمل فہرست' : 'Ingredient table'}</h3><span dir="ltr">({fmt(sheet.grams)} g total)</span></div>
     <div className="table-scroll" tabIndex={0} aria-label="Complete ingredient table; scroll horizontally on small screens">
       <table><thead><tr><th scope="col">{urdu ? 'جزو' : 'Ingredient'}</th><th scope="col">%</th><th scope="col">{urdu ? 'وزن (گرام)' : 'Weight (g)'}</th></tr></thead>
-        <tbody>{sheet.rows.map(row => <tr key={row.id}><th scope="row"><span>{urdu ? row.urdu : row.name}</span><small>{urdu ? row.roman : row.urdu}</small><span className="bar" aria-hidden="true"><i style={{ width: `${row.share}%` }}/></span></th><td dir="ltr">{fmt(row.share)}%</td><td dir="ltr">{fmt(row.grams)}</td></tr>)}</tbody>
+        <tbody>{sheet.rows.map(row => <tr key={row.id}><th scope="row"><span>{urdu ? row.urdu : ingredientLabel(row)}</span><small>{urdu ? row.roman : row.urdu}</small><span className="bar" aria-hidden="true"><i style={{ width: `${row.share}%` }}/></span></th><td dir="ltr">{fmt(row.share)}%</td><td dir="ltr">{fmt(row.grams)}</td></tr>)}</tbody>
         <tfoot><tr><th>{urdu ? 'کل' : 'Total'}</th><td>100%</td><td dir="ltr">{fmt(sheet.grams)} g</td></tr></tfoot>
       </table>
     </div>

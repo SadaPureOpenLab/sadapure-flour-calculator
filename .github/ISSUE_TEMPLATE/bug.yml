@@ -1,0 +1,16 @@
+name: Calculation or interface problem
+description: Report a reproducible problem without private health or customer data.
+body:
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps and expected result
+      description: Include public percentages and quantity where useful. Do not include medical narratives, customer records or credentials.
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed result and browser
+    validations:
+      required: true

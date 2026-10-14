@@ -15,22 +15,37 @@ export function downloadCSV(sheet: Sheet) {
   const a = document.createElement('a'); a.href = url; a.download = 'sadapure-blend.csv'; a.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
-export async function downloadPDF(sheet: Sheet) {
+export async function createPDF(sheet: Sheet, customer?: Record<string, string>) {
   const { jsPDF } = await import('jspdf');
   const doc = new jsPDF();
   doc.setFont('helvetica', 'bold'); doc.setFontSize(20); doc.text('SadaPure Smart Flour (Atta) Builder', 16, 21);
   doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
   doc.text(sheet.classification.replaceAll('—','-'), 16, 31); doc.text(`Total flour: ${sheet.grams} g | Snapshot: ${sheet.source?.version??DATA.version}`, 16, 38);
   const header=(y:number)=>{doc.setFont('helvetica','bold');doc.text('Ingredient',16,y);doc.text('%',143,y);doc.text('Weight (g)',163,y);doc.setFont('helvetica','normal');};
-  header(49);let y=58;
+  let y=49;
+  if(customer){doc.setFontSize(9);for(const [label,value] of Object.entries(customer)){const lines=doc.splitTextToSize(`${label}: ${value}`,178);doc.text(lines,16,y);y+=lines.length*4.5+2;}doc.setFontSize(10);y+=5;}
+  header(y);y+=9;
   for(const row of sheet.rows){const lines=doc.splitTextToSize(ingredientLabel(row),120);const height=Math.max(7,lines.length*5+2);if(y+height>245){doc.addPage();doc.setFontSize(10);doc.text('SadaPure ingredient breakdown (continued)',16,20);header(31);y=40;}doc.text(lines,16,y);doc.text(String(row.share),143,y);doc.text(row.grams.toFixed(2),163,y);y+=height;}
   if(y+70>280){doc.addPage();y=25;}
   doc.text(`TOTAL: 100% / ${sheet.grams.toFixed(2)} g`,16,y+5);
   const notes = ['Ingredient arithmetic only; not a treatment, dietary prescription or medical recipe.', 'Original blend contains wheat, barley, rye and sesame. It is not gluten-free.', 'Custom ingredient safety, cross-contact and cooking suitability are unverified.', 'Weights rounded to 0.01 g using largest-remainder allocation; total is preserved.', `Reference retrieved ${sheet.source?.retrieved??DATA.retrievedDate}:`, sheet.source?.url??DATA.sourceUrl, sheet.rationale??'Custom proportions are not validated medical doses.', 'Additional library entries have no validated nutrient mapping. Reference: fdc.nal.usda.gov', 'PDF uses English and Roman Urdu ingredient names. Use Print for Urdu script.'];
   doc.setFontSize(8);let noteY=y+18;for(const note of notes){for(const line of doc.splitTextToSize(note,178)){if(noteY>276){doc.addPage();noteY=20;}doc.text(line,16,noteY);noteY+=4.5;}noteY+=2;}
   const count=doc.getNumberOfPages();for(let page=1;page<=count;page++){doc.setPage(page);doc.setFontSize(8);doc.text(`${page} / ${count}`,185,288);}
-  doc.save('sadapure-blend.pdf');
+  return doc;
 }
+export async function downloadPDF(sheet: Sheet) { (await createPDF(sheet)).save('sadapure-blend.pdf'); }
+export async function createExcel(sheet: Sheet, customer?: Record<string,string>) {
+  const {default:ExcelJS}=await import('exceljs');
+  const workbook=new ExcelJS.Workbook();workbook.creator='SadaPure Open Lab';
+  if(customer){const contact=workbook.addWorksheet('Customer details');contact.columns=[{header:'Field',key:'field',width:25},{header:'Value',key:'value',width:70}];for(const [field,value] of Object.entries(customer))contact.addRow({field,value});contact.getColumn(2).alignment={wrapText:true};}
+  const table=workbook.addWorksheet('Ingredients');table.columns=[{header:'Ingredient (Roman Urdu)',key:'name',width:55},{header:'Percent',key:'share',width:15},{header:'Weight (g)',key:'grams',width:18}];
+  for(const row of sheet.rows)table.addRow({name:ingredientLabel(row),share:row.share,grams:row.grams});table.addRow({name:'TOTAL',share:100,grams:sheet.grams});table.getColumn(3).numFmt='0.00';table.views=[{state:'frozen',ySplit:1}];table.autoFilter={from:'A1',to:'C'+(sheet.rows.length+1)};
+  const notes=workbook.addWorksheet('Request notes');notes.columns=[{header:'Field',width:25},{header:'Value',width:100}];notes.addRow(['Classification',sheet.classification]);notes.addRow(['Total dry flour (g)',sheet.grams]);notes.addRow(['Source',sheet.source?.url??DATA.sourceUrl]);notes.addRow(['Status','Request only. SadaPure must confirm availability, preparation, price and delivery.']);
+  for(const page of workbook.worksheets){page.getRow(1).font={bold:true,color:{argb:'FFF5F3E8'}};page.getRow(1).fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF143428'}};page.getRow(1).height=26;}
+  return new Uint8Array(await workbook.xlsx.writeBuffer());
+}
+export function downloadBytes(bytes:Uint8Array,name:string,type:string){const url=URL.createObjectURL(new Blob([bytes as BlobPart],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+export async function downloadExcel(sheet:Sheet){downloadBytes(await createExcel(sheet),'sadapure-blend.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');}
 export function shareUrl(quantity: string, blend: Blend, custom: boolean): string {
   parseQuantity(quantity); validateBlend(blend);
   const url = new URL(window.location.href); url.search = ''; url.hash = '';
